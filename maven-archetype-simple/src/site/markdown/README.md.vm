@@ -1,0 +1,54 @@
+# ${project.name}
+
+ <<<${project.artifactId}>>> is an archetype which generates a simple Maven project:
+
+## Usage
+
+To generate from the archetype :
+
+```bash
+mvn archetype:generate \
+    -DarchetypeGroupId=${project.groupId} \
+    -DarchetypeArtifactId=${project.artifactId} \
+    -DarchetypeVersion=${project.version}
+```
+
+parameters can be passed directly :
+
+```bash
+mvn archetype:generate \
+    -DarchetypeGroupId=fr.ebruno.maven.archetypes \
+    -DarchetypeArtifactId=maven-archetype-simple \
+    -DarchetypeVersion=0.1-SNAPSHOT \
+    -DgroupId=demo.pkg \
+    -DartifactId=MyAppHelloWorld \
+    -Dversion=1.0-SNAPSHOT
+```
+
+The result can be compiled with maven 
+
+```console
+cd MyAppHelloWorld
+mvn verify
+```
+
+and executed with maven :
+
+```console
+mvn exec:java -Dexec.mainClass="demo.pkg.App"
+```
+
+or with java (beware no dependencies in the slim jar)
+
+```console
+cd MyAppHelloWorld
+java -cp target/MyAppHelloWorld-1.0-SNAPSHOT.jar demo.pkg.App
+```
+
+## Web site
+
+a web site can be generated in `target/site/index.html` with :
+
+```console
+mvn site
+```
