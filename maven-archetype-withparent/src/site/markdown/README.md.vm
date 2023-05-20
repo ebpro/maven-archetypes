@@ -1,0 +1,52 @@
+# Usage
+This archetype can create a simple Java Project ready for Continuous Integration (CI).
+Set your `-DgithubAccount=` and change `-DgroupId` and `-DartifactId` to match the new application ones.
+
+```console
+mvn archetype:generate \
+ -DarchetypeGroupId=${project.groupId} \
+ -DarchetypeArtifactId=${project.artifactId} \
+ -DarchetypeVersion=${project.version} \
+ -DgithubAccount=<YOURGITHUBACCOUNT> \
+ -DgroupId=fr.univtln.bruno.demos \
+ -DartifactId=myapp \
+ -Dversion=1.0-SNAPSHOT
+```
+
+The application can simply be packaged without and with dependencies.
+The default main class of the manifest is defined (see pom.xml).
+
+```console
+cd MyApp
+# Compile, runs unit and integration tests (the shade plugin generate two artifacts) and package.
+mvn verify
+# Execution from Maven
+mvn exec:java
+# Execution as a uber jar
+java -jar target/myapp-${project.version}-withdependencies.jar
+```
+
+Artifacts can automatically be deployed to GitHub packages.
+
+```console
+mvn deploy
+```
+
+A website can be automatically generated
+
+```console
+mvn site
+```
+
+The website can be displayed in a local web server
+
+```console
+mvn site:run
+```
+
+The website can be deployed to GitHub pages.
+
+```console
+mvn compile
+mvn site-deploy
+```
