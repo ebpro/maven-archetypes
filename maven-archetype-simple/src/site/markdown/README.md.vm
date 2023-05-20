@@ -19,7 +19,6 @@ parameters can be passed directly :
 mvn archetype:generate \
     -DarchetypeGroupId=fr.ebruno.maven.archetypes \
     -DarchetypeArtifactId=maven-archetype-simple \
-    -DarchetypeVersion=0.1-SNAPSHOT \
     -DgroupId=demo.pkg \
     -DartifactId=MyAppHelloWorld \
     -Dversion=1.0-SNAPSHOT

@@ -50,7 +50,7 @@
                 </repository>
                 <repository>
                     <id>github</id>
-                    <url>https://maven.pkg.github.com/ebpro/*</url>
+                    <url>https://maven.pkg.github.com/${env.GITHUB_ORG}</url>
                     <snapshots>
                         <enabled>true</enabled>
                     </snapshots>
