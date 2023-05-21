@@ -6,12 +6,8 @@
     <servers>
         <server>
             <id>github</id>
-            <username>${env.GITHUB_ACTOR}</username>
-            <password>${env.GITHUB_TOKEN}</password>
-        </server>
-        <server>
-            <id>gpg.passphrase</id>
-            <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+            <username>${env.GITHUBACTOR}</username>
+            <password>${env.GITHUBTOKEN}</password>
         </server>
         <server>
             <id>github.pages</id>
@@ -46,11 +42,11 @@
             <repositories>
                 <repository>
                     <id>central</id>
-                    <url>https://repo1.maven.org/maven2</url>
+                    <url>https://repo.maven.apache.org/maven2/</url>
                 </repository>
                 <repository>
                     <id>github</id>
-                    <url>https://maven.pkg.github.com/${env.GITHUB_ORG}/*</url>
+                    <url>https://maven.pkg.github.com/${env.GITHUBORG}/*</url>
                     <snapshots>
                         <enabled>true</enabled>
                     </snapshots>
