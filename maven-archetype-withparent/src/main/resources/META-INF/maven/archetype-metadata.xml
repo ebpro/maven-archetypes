@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<archetype-descriptor xmlns="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
+<archetype-descriptor
+    xmlns="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 http://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd"
     name="${artifactId}">
@@ -66,24 +67,22 @@
             <directory />
             <includes>
                 <include>.dockerignore</include>
-                <include>.gitignore</include>
+                <include>.gitignore.template</include>
                 <include>wrappers.sh</include>
-                <include>mvnw.sh</include>
+                <include>mvnw</include>
+                <include>mvnw.cmd</include>
                 <include>rules.xml</include>
                 <include>README.md</include>
             </includes>
         </fileSet>
-        <fileSet encoding="UTF-8">
+        <fileSet encoding="UTF-8" filtered="false">
             <directory>.github</directory>
-            <includes>
-                <include>**/*</include>
-            </includes>
         </fileSet>
-        <fileSet encoding="UTF-8">
+        <fileSet encoding="UTF-8" filtered="false">
             <directory>docker</directory>
-            <includes>
-                <include>**/*</include>
-            </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8" filtered="false">
+            <directory>.mvn</directory>
         </fileSet>
     </fileSets>
 
