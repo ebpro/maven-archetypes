@@ -1,6 +1,9 @@
-# Standard Maven environment
+# Best practices Maven archetypes
 
-This project maintains SOME Maven archetypes.
+This project maintains some Maven archetypes.
+
+* `fr.ebruno.maven.archetypes:simple` a simple standalone Java project.
+* `fr.ebruno.maven.archetypes:simple-withparent`a CI ready one with a complete parent POM.
 
 ## fr.ebruno.maven.archetypes:simple
 

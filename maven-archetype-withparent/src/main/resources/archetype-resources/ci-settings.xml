@@ -23,8 +23,8 @@
         </server>
         <server>
             <id>dockerhub</id>
-            <username>${env.DOCKER_USERNAME}</username>
-            <password>${env.DOCKER_PASSWORD}</password>
+            <username>${env.DOCKERHUB_USERNAME}</username>
+            <password>${env.DOCKERHUB_TOKEN}</password>
         </server>
         <server>
             <id>maven</id>
@@ -50,7 +50,7 @@
                 </repository>
                 <repository>
                     <id>github</id>
-                    <url>https://maven.pkg.github.com/ebpro/*</url>
+                    <url>https://maven.pkg.github.com/${env.GITHUB_ORG}/*</url>
                     <snapshots>
                         <enabled>true</enabled>
                     </snapshots>
