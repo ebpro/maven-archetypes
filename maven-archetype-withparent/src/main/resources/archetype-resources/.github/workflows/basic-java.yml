@@ -3,7 +3,7 @@ name: Java CI
 on: [ push ]
 
 env:
-  GITHUBLOGIN: ${{secrets.GITHUBLOGIN}}
+  GITHUBACTOR: ${{secrets.GITHUBACTOR}}
   GITHUBTOKEN: ${{secrets.GITHUBTOKEN}}
   SONAR_URL: ${{secrets.SONAR_URL}}
   SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}

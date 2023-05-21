@@ -90,7 +90,7 @@ and container images. The build itself can also be done in a container.
 ### Configuration (Once)
 
 The configuration is done with environment variables.
-For GitHub : GITHUBORG (GitHub account or organisation), GITHUB_ACTOR, GITHUB_TOKEN
+For GitHub : GITHUBORG (GitHub account or organisation), GITHUBACTOR, GITHUBTOKEN, GITHUBORG (org or account)
 and optionally for SonarQube SONAR_URL and SONAR_TOKEN (To install SonarQube see https://github.com/ebpro/sonarqube)
 
 For GitHub the CLI is needed (https://cli.github.com/).
@@ -99,7 +99,7 @@ Those variables have to be stored on the CI server (see [GitHub Encrypted secret
 The script below transforms the local variables in GitHub secrets.
 
 ```bash
-bash -c 'for secret in GITHUB_ACTOR GITHUB_TOKEN SONAR_URL SONAR_TOKEN; do \
+bash -c 'for secret in GITHUBACTOR GITHUBTOKEN SONAR_URL SONAR_TOKEN; do \
 eval gh secret set $secret --app actions  \
                            --body ${!secret} \
                            --org ${GITHUBORG} \
@@ -124,7 +124,7 @@ Generate each new project with this maven archetype (adapt at least the bold par
 mvn --batch-mode archetype:generate \
     -DarchetypeGroupId=fr.ebruno.maven.archetypes \
     -DarchetypeArtifactId=maven-archetype-withparent \
-    -DgithubAccount=<b>$GITHUB_ORG</b> \
+    -DgithubAccount=<b>$GITHUBORG</b> \
     -DgroupId=<b>demo.pkg</b> \
     -DartifactId=<b>MyApp</b> \
     -Dversion=0.1.0-SNAPSHOT
