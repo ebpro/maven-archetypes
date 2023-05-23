@@ -68,16 +68,6 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <!-- Integration Tests IT -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
   <scm>
     <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
     <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>

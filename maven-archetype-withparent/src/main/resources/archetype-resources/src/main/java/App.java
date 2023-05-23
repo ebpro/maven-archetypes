@@ -1,6 +1,7 @@
 package $package;
 
 import lombok.extern.java.Log;
+import lombok.experimental.UtilityClass;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -11,7 +12,14 @@ import java.util.ResourceBundle;
  * A simple starting App ready for CI.
  */
 @Log
+//@UtilityClass
 public class App {
+
+    /**
+     * A default constructor with a comment
+     */
+    public App() { /* TODO complete this dummy constructor */ }
+
     /**
      * A resource bundle for I18N internationalisation.
      */

@@ -19,4 +19,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+<build><plugins><plugin>
+          <artifactId>maven-help-plugin</artifactId></plugin></plugins></build>
+
 </project>

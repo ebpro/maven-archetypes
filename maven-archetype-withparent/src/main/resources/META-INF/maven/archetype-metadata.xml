@@ -73,9 +73,12 @@
                 <include>mvnw.cmd</include>
                 <include>rules.xml</include>
                 <include>README.md</include>
-            </includes>
+      <include>.github</include>
+      <include>docker</include>
+      <include>.mvn</include>
+            </includes>      
         </fileSet>
-        <fileSet encoding="UTF-8" filtered="false">
+        <!--fileSet encoding="UTF-8" filtered="false">
             <directory>.github</directory>
         </fileSet>
         <fileSet encoding="UTF-8" filtered="false">
@@ -83,7 +86,7 @@
         </fileSet>
         <fileSet encoding="UTF-8" filtered="false">
             <directory>.mvn</directory>
-        </fileSet>
+        </fileSet-->
     </fileSets>
 
 </archetype-descriptor>
