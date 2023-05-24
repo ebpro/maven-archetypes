@@ -153,7 +153,7 @@ git flow init -d && touch README.md && git add . && git commit -m "sets initial 
   gh repo create ${GITHUBORG}/${PWD##*/} --disable-wiki --private  --source=. --push &&\
     git checkout --orphan gh-pages && \
       git rm -rf . && touch index.html &&  \
-      git add . && \
+      git add index.html && \
       git commit -m "sets initial empty site." && \
       git push --all \
     && git checkout develop &&\
