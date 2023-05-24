@@ -1,4 +1,5 @@
 # Usage
+
 This archetype can create a simple Java Project ready for Continuous Integration (CI).
 Set your `-DgithubAccount=` and change `-DgroupId` and `-DartifactId` to match the new application ones.
 

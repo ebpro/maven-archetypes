@@ -1,8 +1,10 @@
 # Usage
+
 This simple Java Project is ready for Continuous Integration (CI).
 
 The application can simply be packaged without and with dependencies.
 The default main class of the manifest is defined (see pom.xml).
+
 ```console
 # Compile, run unit and integration tests (the shade plugin generate two artifacts) and package.
 mvn verify

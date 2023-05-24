@@ -1,6 +1,6 @@
 # ${project.name}
 
- <<<${project.artifactId}>>> is an archetype which generates a simple Maven project:
+${project.groupId}:${project.artifactId}:${project.version} is an archetype which generates a simple Maven project:
 
 ## Usage
 
@@ -21,7 +21,7 @@ mvn archetype:generate \
     -DarchetypeArtifactId=maven-archetype-simple \
     -DgroupId=demo.pkg \
     -DartifactId=MyAppHelloWorld \
-    -Dversion=1.0-SNAPSHOT
+    -Dversion=0.1.0-SNAPSHOT
 ```
 
 The result can be compiled with maven 
