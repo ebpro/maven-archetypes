@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/maven-archetype-archetype/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-j2ee-simple/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-plugin/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-plugin-site/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-portlet/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-quickstart/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-simple/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-site/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-site-simple/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-site-skin/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/maven-archetype-webapp/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="maven-archetype-simple" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="maven-archetype-archetype" target="1.7" />
+      <module name="maven-archetype-j2ee-simple" target="1.7" />
+      <module name="maven-archetype-plugin" target="1.7" />
+      <module name="maven-archetype-plugin-site" target="1.7" />
+      <module name="maven-archetype-portlet" target="1.7" />
+      <module name="maven-archetype-quickstart" target="1.7" />
+      <module name="maven-archetype-site" target="1.7" />
+      <module name="maven-archetype-site-simple" target="1.7" />
+      <module name="maven-archetype-site-skin" target="1.7" />
+      <module name="maven-archetype-webapp" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
