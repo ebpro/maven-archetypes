@@ -84,16 +84,16 @@ java -jar target/MyApp-0.1.0-SNAPSHOT.jar
 
 This project generates a complete Java+Maven project ready for Continuous Integration (CI).
 It is ready for GitFlow, SonarQube (tests, code coverage, ...).
-It can produce signed artifacts, fat jars, slim runtime with jLink, native executables with GraalVM 
+It can produce signed artifacts, fat jars, slim runtime with jLink, native executables with GraalVM
 and container images. The build itself can also be done in a container.
 
 ### Configuration (Once)
 
 The configuration is done with environment variables.
 For GitHub : GITHUBORG (GitHub account or organisation), GITHUBACTOR, GITHUBTOKEN, GITHUBORG (org or account)
-and optionally for SonarQube SONAR_URL and SONAR_TOKEN (To install SonarQube see https://github.com/ebpro/sonarqube)
+and optionally for SonarQube SONAR_URL and SONAR_TOKEN (Needs an instance of [SonarQube](https://github.com/ebpro/sonarqube))
 
-For GitHub the CLI is needed (https://cli.github.com/).
+For GitHub the [CLI](https://cli.github.com/) is needed.
 
 Those variables have to be stored on the CI server (see [GitHub Encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)).
 The script below transforms the local variables in GitHub secrets.
