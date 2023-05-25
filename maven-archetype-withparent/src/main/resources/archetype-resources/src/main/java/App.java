@@ -1,7 +1,6 @@
 package $package;
 
-import lombok.extern.java.Log;
-import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -11,8 +10,7 @@ import java.util.ResourceBundle;
 /**
  * A simple starting App ready for CI.
  */
-@Log
-//@UtilityClass
+@Slf4j
 public class App {
 
     /**

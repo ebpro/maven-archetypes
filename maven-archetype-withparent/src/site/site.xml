@@ -27,14 +27,13 @@
 
     <body>
         <breadcrumbs>
-            <item name="Archetypes" href="https://maven.apache.org/archetypes/index.html" />
+            <item name="Archetypes" href="https://bruno.univ-tln.fr/java" />
         </breadcrumbs>
 
         <menu name="Overview">
-            <item name="Introduction" href="index.html" />
+            <!--item name="Introduction" href="index.html" /-->
             <item name="Readme" href="README.html" />
             <item name="License" href="https://spdx.org/licenses/MIT.html" />
-            <item name="Download" href="download.html" />
         </menu>
         <menu ref="modules" />
         <menu ref="reports" inherit="top" />

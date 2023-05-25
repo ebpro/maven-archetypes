@@ -272,7 +272,7 @@ INFO: Hello World! []
 ### Building with Maven in docker
 
 It is possible to build and run the project with just docker installed. A wrapper to run maven and java
-in a container but to work with the current directory is proposed. ~/.m2, ~/.ssh, ~/.gitconfig and the src directories are mounted. 
+in a container but to work with the current directory is proposed. ~/.m2, ~/.ssh, ~/.gitconfig and the src directories are mounted.
 The environment variables needed for the project are also transmitted. The UID and GID are the one of the current user.
 
 ```bash
@@ -285,10 +285,7 @@ docker run --rm \
 
 ### Docker Multistage build
 
-The file `docker\Dockerfile` is a multistage Dockerfile to build and deliver 
-the application with several strategies (shaded jar, jlink, GraalVM) 
-on several distributions (debian and alpine). 
-To ease the use a wrapper for docker commands is provided in dockerw.sh
+The file `docker\Dockerfile` is a multistage Dockerfile to build and deliver the application with several strategies (shaded jar, jlink, GraalVM) on several distributions (debian and alpine). To ease the use a wrapper for docker commands is provided in dockerw.sh
 
 ```bash
 . ./ci-wrappers.sh

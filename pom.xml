@@ -30,7 +30,9 @@
     <github.account>ebpro</github.account>
 
     <encoding>UTF-8</encoding>
-    <maven.site.path>archetypes-archives/archetypes-LATEST</maven.site.path>
+
+    <mavenarchetypepackaging.version>3.2.0</mavenarchetypepackaging.version>
+
   </properties>
 
   <repositories>
@@ -61,10 +63,12 @@
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url>
         </snapshotRepository>
+
         <site>
             <id>githubpages</id>
             <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
         </site>
+
     </distributionManagement>
 
   <build>
@@ -72,7 +76,7 @@
       <extension>
         <groupId>org.apache.maven.archetype</groupId>
         <artifactId>archetype-packaging</artifactId>
-        <version>3.2.0</version>
+        <version>${mavenarchetypepackaging.version}</version>
       </extension>
     </extensions>
     <resources>
@@ -94,7 +98,6 @@
         <!-- Generate a settings.xml for IT-->
         <plugin>
           <artifactId>maven-help-plugin</artifactId>
-          <version>3.4.0</version>
           <configuration>
             <showPasswords>true</showPasswords>
             <output>${project.build.directory}/effective-settings.xml</output>
@@ -113,15 +116,10 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-archetype-plugin</artifactId>
-          <version>3.2.1</version>
           <configuration>
             <settingsFile>${project.build.directory}/effective-settings.xml</settingsFile>
             <ignoreEOLStyle>true</ignoreEOLStyle>
             <showVersion>true</showVersion>
-            <!--properties>
-              <https.protocols>${https.protocols}</https.protocols>
-              <archetype.test.settingsFile></archetype.test.settingsFile>
-            </properties-->
           </configuration>
           <dependencies>
             <dependency>

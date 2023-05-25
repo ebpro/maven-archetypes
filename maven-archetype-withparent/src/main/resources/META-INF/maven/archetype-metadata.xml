@@ -7,13 +7,13 @@
     name="${artifactId}">
 
     <requiredProperties>
-        <requiredProperty key="githubAccount">
-        </requiredProperty>
+        <requiredProperty key="githubAccount"/>
     </requiredProperties>
 
     <fileSets>
         <fileSet filtered="true" packaged="true">
             <directory>src/main/java</directory>
+            
             <includes>
                 <include>**/*.java</include>
             </includes>
@@ -69,24 +69,14 @@
                 <include>.dockerignore</include>
                 <include>.gitignore.template</include>
                 <include>wrappers.sh</include>
-                <include>mvnw</include>
-                <include>mvnw.cmd</include>
+                <include>ci-settings.xml</include>
                 <include>rules.xml</include>
                 <include>README.md</include>
-      <include>.github</include>
-      <include>docker</include>
-      <include>.mvn</include>
-            </includes>      
+                <include>.github</include>
+                <include>docker</include>
+                <include>.mvn</include>
+            </includes>
         </fileSet>
-        <!--fileSet encoding="UTF-8" filtered="false">
-            <directory>.github</directory>
-        </fileSet>
-        <fileSet encoding="UTF-8" filtered="false">
-            <directory>docker</directory>
-        </fileSet>
-        <fileSet encoding="UTF-8" filtered="false">
-            <directory>.mvn</directory>
-        </fileSet-->
     </fileSets>
 
 </archetype-descriptor>

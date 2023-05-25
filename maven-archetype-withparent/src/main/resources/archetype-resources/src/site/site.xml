@@ -1,9 +1,8 @@
-<project name="${project.artifactId}">
-    <skin>
-        <groupId>org.apache.maven.skins</groupId>
-        <artifactId>maven-fluido-skin</artifactId>
-        <version>1.11.2</version>
-    </skin>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+         name="${project.artifactId}">
 
     <!--bannerLeft>
         <name>Project Name</name>
@@ -23,21 +22,28 @@
             img="https://maven.apache.org/images/logos/maven-feather.png" />
     </poweredBy>
 -->
+
+    <edit>${project.scm.url}</edit>
+
     <body>
+        <breadcrumbs>
+            <item name="Archetypes" href="https://bruno.univ-tln.fr/java" />
+        </breadcrumbs>
+
         <menu name="Overview">
+            <!--item name="Introduction" href="index.html" /-->
             <item name="Readme" href="README.html" />
+            <item name="License" href="https://spdx.org/licenses/MIT.html" />
         </menu>
-
-        <!--menu ref="parent" inherit="top" /-->
-        <menu ref="reports" />
         <menu ref="modules" />
+        <menu ref="reports" inherit="top" />
     </body>
-
     <custom>
         <fluidoSkin>
-            <!--profile>pre-release</profile-->
-            <topBarEnabled>true</topBarEnabled>
-            <sideBarEnabled>false</sideBarEnabled>
+            <!--profile>(pre-release|sandbox|retired)</profile-->
+            <profile>pre-release</profile>
+            <topBarEnabled>false</topBarEnabled>
+            <sideBarEnabled>true</sideBarEnabled>
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
             <googleSearch>
                 <sitesearch>${project.url}</sitesearch>
@@ -51,4 +57,11 @@
             <breadcrumbDivider>»</breadcrumbDivider>
         </fluidoSkin>
     </custom>
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.11.2</version>
+    </skin>
+    
 </project>

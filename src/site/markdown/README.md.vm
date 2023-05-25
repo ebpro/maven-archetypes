@@ -30,24 +30,61 @@ mvn archetype:generate \
     -Dversion=0.1.0-SNAPSHOT
 ```
 
+In in the project directory, a maven wrapper should be generated to control Maven version for this project.
+
+```bash
+cd MyApp
+mvn wrapper:wrapper 
+```
+
 The result can be compiled with maven
 
 ```console
 cd MyApp
-mvn verify
+./mvnw verify
 ```
 
 and executed with maven :
 
 ```console
-mvn exec:java -Dexec.mainClass="demo.pkg.App"
+./mvnw exec:java -Dexec.mainClass="demo.pkg.App"
 ```
 
-or with java (beware no dependencies in the slim jar)
+but as the default `App` class is defined in a property in the ``pom.xml`, this could be simply :
 
 ```console
-cd MyAppHelloWorld
-java -cp target/MyAppHelloWorld-1.0-SNAPSHOT.jar demo.pkg.App
+./mvnw exec:java"
+```
+
+The jar can be launch with java but the slim jar fails because of missing dependencies.
+
+```console
+java -cp target/MyApp-0.1.0-SNAPSHOT.jar demo.pkg.App
+java -jar target/MyApp-0.1.0-SNAPSHOT.jar
+```
+
+A complete packaging (javadoc jar and shadedjar) can be done with :
+
+```console
+./mvnw --activate-profiles javadoc,shadedjar verify
+```
+
+```console
+java -cp target/MyApp-0.1.0-SNAPSHOT-withdependencies.jar demo.pkg.App
+java -jar target/MyApp-0.1.0-SNAPSHOT-withdependencies.jar 
+```
+
+Thanks to Jlink and a modular java project (jigsaw), it is possible to generate a minimal JRE with needed modules and dependencies.
+
+```bash
+./mvnw --activate-profiles javadoc,jlink clean verify
+du -hs target/image
+```
+
+It is interesting to compare sizes of the shaded jar, the Jlink distribution (with an embeded JRE)
+```bash
+du -hs target/*-withdependencies.jar
+du -hs target/image
 ```
 
 ### Web site
