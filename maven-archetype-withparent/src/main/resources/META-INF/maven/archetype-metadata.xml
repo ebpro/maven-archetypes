@@ -11,7 +11,7 @@
     </requiredProperties>
 
     <fileSets>
-        <fileSet filtered="true" packaged="true">
+        <fileSet filtered="true" packaged="true">        
             <directory>src/main/java</directory>
             
             <includes>
@@ -75,6 +75,25 @@
                 <include>.github</include>
                 <include>docker</include>
                 <include>.mvn</include>
+            </includes>
+        </fileSet>
+        
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>.github</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>docker</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>.mvn</directory>
+            <includes>
+                <include>**/*</include>
             </includes>
         </fileSet>
     </fileSets>
