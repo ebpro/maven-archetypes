@@ -1,4 +1,4 @@
-package $package;
+package ${package};
 
 import lombok.extern.slf4j.Slf4j;
 

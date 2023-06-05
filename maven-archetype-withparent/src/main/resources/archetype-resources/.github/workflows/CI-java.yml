@@ -11,4 +11,4 @@ jobs:
         secrets: inherit
         with:
           maven-args: --errors --batch-mode --show-version --update-snapshots --settings ci-settings.xml --color always --no-transfer-progress
-          verify-goal: --activate-profiles jacoco,javadoc,gpgsigning verify
+          verify-goal: -X --activate-profiles jacoco,javadoc,gpgsigning verify

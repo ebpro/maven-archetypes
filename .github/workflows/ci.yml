@@ -11,4 +11,4 @@ jobs:
         secrets: inherit
         with:
           maven-args: --errors --batch-mode --show-version --update-snapshots --settings ci-settings.xml --color always --no-transfer-progress --activate-profiles github,nexus
-          verify-goal: --activate-profiles github,nexus,gpgsigning verify
+          verify-goal: -X --activate-profiles github,nexus,gpgsigning verify

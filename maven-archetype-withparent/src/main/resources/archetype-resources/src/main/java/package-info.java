@@ -1,4 +1,4 @@
 /**
  * A simple package documentation
  */
-package $package;
+package ${package};
