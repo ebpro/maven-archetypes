@@ -98,9 +98,9 @@
 
     </profiles>
 
-    <activeProfiles>
+    <!--activeProfiles>
         <activeProfile>github</activeProfile>
         <activeProfile>nexus</activeProfile>
-    </activeProfiles>
+    </activeProfiles-->
 
 </settings>
