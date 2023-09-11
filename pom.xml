@@ -35,17 +35,6 @@
 
   </properties>
 
-  <repositories>
-    <repository><!-- useful to resolve maven-archetype-plugin when it is a SNAPSHOT -->
-      <id>apache.snapshots</id>
-      <name>Apache Snapshot Repository</name>
-      <url>https://repository.apache.org/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-  </repositories>
-
   <scm>
         <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
         <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>
