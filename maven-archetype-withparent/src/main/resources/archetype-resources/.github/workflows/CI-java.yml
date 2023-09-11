@@ -1,0 +1,14 @@
+name: CI Java (Host)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+    build:
+        name: build-sonar-site-upload
+        uses: ebpro/gh-actions-shared-java/.github/workflows/ci-shareable-maven.yml@develop
+        secrets: inherit
+        with:
+          maven-args: --errors --batch-mode --show-version --update-snapshots --settings ci-settings.xml --color always --no-transfer-progress
+          verify-goal: -X --activate-profiles jacoco,javadoc,gpgsigning verify

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.maven.poms</groupId>
+    <artifactId>maven-parentpom</artifactId>
+    <version>0.1.2</version>
+  </parent>
+
+  <groupId>fr.ebruno.maven.archetypes</groupId>
+  <artifactId>maven-archetypes</artifactId>
+  <version>0.1.0</version>
+  <packaging>pom</packaging>
+
+  <name>Apache Maven archetypes</name>
+  <description>Standard Maven archetypes</description>
+  <url>https://github.com/ebpro/maven-archetypes</url>
+
+  <modules>
+    <module>maven-archetype-simple</module>
+    <module>maven-archetype-withparent</module>
+  </modules>
+
+  <properties>
+
+    <github.account>ebpro</github.account>
+
+    <encoding>UTF-8</encoding>
+
+    <mavenarchetypepackaging.version>3.2.0</mavenarchetypepackaging.version>
+
+  </properties>
+
+  <repositories>
+    <repository><!-- useful to resolve maven-archetype-plugin when it is a SNAPSHOT -->
+      <id>apache.snapshots</id>
+      <name>Apache Snapshot Repository</name>
+      <url>https://repository.apache.org/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+  </repositories>
+
+  <scm>
+        <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
+        <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</developerConnection>
+  </scm>
+
+  <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <!--url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url-->
+            <url>https://maven.pkg.github.com/ebpro/maven-archetypes</url>
+        </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <!--url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url-->
+            <url>https://maven.pkg.github.com/ebpro/maven-archetypes</url>
+        </snapshotRepository>
+
+        <site>
+            <id>githubpages</id>
+            <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
+        </site>
+
+    </distributionManagement>
+
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.archetype</groupId>
+        <artifactId>archetype-packaging</artifactId>
+        <version>${mavenarchetypepackaging.version}</version>
+      </extension>
+    </extensions>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>src/main/resources-filtered</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <filters>
+      <filter>../plugin-versions.properties</filter>
+      <filter>../dependency-version.properties</filter>
+    </filters>
+    <pluginManagement>
+      <plugins>
+
+        <!-- Generate a settings.xml for IT-->
+        <plugin>
+          <artifactId>maven-help-plugin</artifactId>
+          <configuration>
+            <showPasswords>true</showPasswords>
+            <output>${project.build.directory}/effective-settings.xml</output>
+          </configuration>
+          <executions>
+            <execution>
+              <!-- This makes sure we run before maven-archetype-plugin -->
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>effective-settings</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <configuration>
+            <settingsFile>${project.build.directory}/effective-settings.xml</settingsFile>
+            <ignoreEOLStyle>true</ignoreEOLStyle>
+            <showVersion>true</showVersion>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.groovy</groupId>
+              <artifactId>groovy-xml</artifactId>
+              <version>3.0.19</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <configuration>
+            <escapeString>\</escapeString>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-help-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-archetype-plugin</artifactId>
+      </plugin>
+    </plugins>
+
+  </build>
+
+
+</project>
