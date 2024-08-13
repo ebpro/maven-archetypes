@@ -2,6 +2,10 @@ name: CI Java (Host)
 
 on:
   push:
+    branches:
+      - "**"
+    tags:
+      - "!**"
   workflow_dispatch:
 
 jobs:
