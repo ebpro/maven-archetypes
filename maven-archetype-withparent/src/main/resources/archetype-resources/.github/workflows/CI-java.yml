@@ -2,6 +2,10 @@ name: CI Java (Host)
 
 on:
   push:
+    branches:
+      - "**"
+    tags:
+      - "!**"
   workflow_dispatch:
 
 jobs:
@@ -10,5 +14,8 @@ jobs:
         uses: ebpro/gh-actions-shared-java/.github/workflows/ci-shareable-maven.yml@develop
         secrets: inherit
         with:
-          maven-args: --errors --batch-mode --show-version --update-snapshots --settings ci-settings.xml --color always --no-transfer-progress
-          verify-goal: -X --activate-profiles jacoco,javadoc,gpgsigning verify
+          runs-on: arc-runner-set-compute-lsis
+          quality-goal-run: "true"
+          deploy-goal-run: "true"
+          site-goal-run: "true"
+          site-goal-branch: "master"
