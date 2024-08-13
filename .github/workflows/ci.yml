@@ -10,5 +10,8 @@ jobs:
         uses: ebpro/gh-actions-shared-java/.github/workflows/ci-shareable-maven.yml@develop
         secrets: inherit
         with:
-          maven-args: --errors --batch-mode --show-version --update-snapshots --settings ci-settings.xml --color always --no-transfer-progress --activate-profiles github,nexus
-          verify-goal: --activate-profiles github,nexus,gpgsigning verify
+          runs-on: arc-runner-set-compute-lsis
+          quality-goal-run: "true"
+          deploy-goal-run: "true"
+          site-goal-run: "true"
+          site-goal-branch: "master"

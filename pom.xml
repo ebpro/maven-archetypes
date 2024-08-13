@@ -8,7 +8,7 @@
   <parent>
     <groupId>fr.ebruno.maven.poms</groupId>
     <artifactId>maven-parentpom</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.14</version>
   </parent>
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
@@ -19,6 +19,27 @@
   <name>Apache Maven archetypes</name>
   <description>Standard Maven archetypes</description>
   <url>https://github.com/ebpro/maven-archetypes</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Emmanuel BRUNO</name>
+      <email>emmanuel.bruno@univ-tln.fr</email>
+      <url>https://bruno.univ-tln.fr</url>
+      <organization>LIS/UTLN</organization>
+      <organizationUrl>https://www.univ-tln.fr</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
+    <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</developerConnection>
+  </scm>
 
   <modules>
     <module>maven-archetype-simple</module>
@@ -28,18 +49,11 @@
   <properties>
 
     <github.account>ebpro</github.account>
-
     <encoding>UTF-8</encoding>
-
     <mavenarchetypepackaging.version>3.2.0</mavenarchetypepackaging.version>
 
   </properties>
 
-  <scm>
-        <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
-        <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</developerConnection>
-  </scm>
 
   <distributionManagement>
         <repository>
