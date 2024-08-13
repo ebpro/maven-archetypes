@@ -13,7 +13,7 @@
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
   <artifactId>maven-archetypes</artifactId>
-  <version>0.1.4-SNAPSHOT</version>
+  <version>0.1.4</version>
   <packaging>pom</packaging>
 
   <name>Apache Maven archetypes</name>
