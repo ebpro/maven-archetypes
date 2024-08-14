@@ -9,7 +9,7 @@
   <parent>
     <groupId>fr.ebruno.maven.poms</groupId>
     <artifactId>maven-parentpom</artifactId>
-    <version>0.1.14</version>
+    <version>0.1.16</version>
   </parent>
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
