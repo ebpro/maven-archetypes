@@ -3,17 +3,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>fr.ebruno.maven.poms</groupId>
     <artifactId>maven-parentpom</artifactId>
-    <version>0.1.14</version>
+    <version>0.1.16</version>
   </parent>
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
   <artifactId>maven-archetypes</artifactId>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <packaging>pom</packaging>
 
   <name>Apache Maven archetypes</name>
@@ -23,7 +24,8 @@
     <license>
       <name>MIT License</name>
       <url>https://opensource.org/licenses/MIT</url>
-    </license>
+      <distribution>repo</distribution>
+     </license>
   </licenses>
   <developers>
     <developer>
@@ -35,11 +37,67 @@
     </developer>
   </developers>
 
+  <!-- Environment Settings -->
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/${github.account}/${project.artifactId}/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>Github Actions</system>
+    <url>https://github.com/${github.account}/${project.artifactId}/actions</url>
+  </ciManagement>
   <scm>
     <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
     <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>
     <developerConnection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</developerConnection>
   </scm>
+
+  <distributionManagement>
+    <site>
+      <id>githubpages</id>
+      <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
+    </site>
+  </distributionManagement>
+
+  <profiles>
+    <profile>
+      <id>github</id>
+      <distributionManagement>
+        <repository>
+          <id>github</id>
+          <name>GitHub Packages</name>
+          <url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url>
+        </repository>
+        <snapshotRepository>
+          <id>github</id>
+          <name>GitHub Packages</name>
+          <url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url>
+        </snapshotRepository>
+      </distributionManagement>
+
+      <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/${github.account}/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    </profile>
+    <profile>
+      <id>shadedjar</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <modules>
     <module>maven-archetype-simple</module>
@@ -47,34 +105,10 @@
   </modules>
 
   <properties>
-
     <github.account>ebpro</github.account>
     <encoding>UTF-8</encoding>
     <mavenarchetypepackaging.version>3.2.0</mavenarchetypepackaging.version>
-
   </properties>
-
-
-  <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <!--url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url-->
-            <url>https://maven.pkg.github.com/ebpro/maven-archetypes</url>
-        </repository>
-        <snapshotRepository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <!--url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url-->
-            <url>https://maven.pkg.github.com/ebpro/maven-archetypes</url>
-        </snapshotRepository>
-
-        <site>
-            <id>githubpages</id>
-            <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
-        </site>
-
-    </distributionManagement>
 
   <build>
     <extensions>
@@ -154,8 +188,6 @@
         <artifactId>maven-archetype-plugin</artifactId>
       </plugin>
     </plugins>
-
   </build>
-
 
 </project>
