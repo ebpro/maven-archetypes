@@ -29,4 +29,11 @@
     </plugins>
   </build>
 
+  <distributionManagement>
+    <site>
+      <id>githubpages</id>
+      <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
+    </site>
+  </distributionManagement>
+
 </project>
