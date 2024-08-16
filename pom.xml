@@ -9,17 +9,17 @@
   <parent>
     <groupId>fr.ebruno.maven.poms</groupId>
     <artifactId>maven-parentpom</artifactId>
-    <version>0.1.18</version>
+    <version>0.1.19</version>
   </parent>
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
   <artifactId>maven-archetypes</artifactId>
-  <version>0.1.7</version>
+  <version>0.1.8</version>
   <packaging>pom</packaging>
 
   <name>Apache Maven archetypes</name>
   <description>Standard Maven archetypes</description>
-  <url>https://github.com/ebpro/maven-archetypes</url>
+  <url>https://${github.account}.github.io/${project.artifactId}/</url>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -53,11 +53,18 @@
   </scm>
 
   <distributionManagement>
+     <site>
+        <id>site</id>
+        <url>file:///tmp/site/staging</url>
+     </site>
+  </distributionManagement>
+
+  <!--distributionManagement>
     <site>
       <id>githubpages</id>
       <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
     </site>
-  </distributionManagement>
+  </distributionManagement-->
 
   <profiles>
     <profile>
@@ -187,7 +194,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-archetype-plugin</artifactId>
       </plugin>
-
     </plugins>
   </build>
 
