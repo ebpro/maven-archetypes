@@ -9,7 +9,7 @@
   <parent>
     <groupId>fr.ebruno.maven.poms</groupId>
     <artifactId>maven-parentpom</artifactId>
-    <version>0.1.17-upgradedep-SNAPSHOT</version>
+    <version>0.1.18-SNAPSHOT</version>
   </parent>
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
@@ -106,8 +106,8 @@
 
   <properties>
     <github.account>ebpro</github.account>
-    <!--encoding>UTF-8</encoding-->
     <mavenarchetypepackaging.version>3.2.0</mavenarchetypepackaging.version>
+    <!--stagingDirectory>/tmp/site</stagingDirectory-->
   </properties>
 
   <build>
@@ -186,15 +186,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-archetype-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-scm-publish-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <scmBranch>gh-pages</scmBranch>
-        </configuration>
       </plugin>
 
     </plugins>

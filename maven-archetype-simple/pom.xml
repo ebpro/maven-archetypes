@@ -22,11 +22,4 @@
     An archetype which contains a simple Maven project.
   </description>
 
-  <distributionManagement>
-    <site>
-      <id>githubpages</id>
-      <url>scm:git:ssh://git@github.com/${github.account}/${project.artifactId}.git</url>
-    </site>
-  </distributionManagement>
-
 </project>
