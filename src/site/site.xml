@@ -41,7 +41,6 @@
     <custom>
         <fluidoSkin>
             <!--profile>(pre-release|sandbox|retired)</profile-->
-            <profile>pre-release</profile>
             <topBarEnabled>false</topBarEnabled>
             <sideBarEnabled>true</sideBarEnabled>
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
