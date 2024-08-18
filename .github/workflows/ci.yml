@@ -3,9 +3,8 @@ name: CI Java (Host)
 on:
   push:
     branches:
-      - "**"
-    tags:
-      - "!**"
+      - '**'        # matches every branch
+      - '!master'   # excludes master
   workflow_dispatch:
 
 jobs:

@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest
+class AppTest
 {
     /**
-    * Rigourous Test :-)
-    */
-    @DisplayName("Dummy test successful")
+     * Rigorous Test :-)
+     */
+    @DisplayName("Dummy unit test successful")
     @Test
-    public void testApp()
+    void testApp()
     {
         assertTrue( true );
     }
