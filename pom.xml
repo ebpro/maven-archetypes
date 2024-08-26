@@ -14,7 +14,7 @@
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
   <artifactId>maven-archetypes</artifactId>
-  <version>0.1.9</version>
+  <version>0.1.10-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache Maven archetypes</name>
