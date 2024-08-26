@@ -1,22 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <archetype-descriptor
-  xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
-  xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  name="maven-archetype-simple">
-  <fileSets>
-    <fileSet filtered="true" packaged="true">
-      <directory>src/main/java</directory>
-    </fileSet>
-    <fileSet filtered="true" packaged="true">
-      <directory>src/test/java</directory>
-    </fileSet>
-    <fileSet filtered="true">
-      <directory>src/site</directory>
-    </fileSet>
-    <fileSet filtered="false">
-      <directory>.mvn</directory>
-    </fileSet>
-  </fileSets>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
+        xsi:schemaLocation="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 http://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd"
+        name="${artifactId}">
+
+    <fileSets>
+
+        <fileSet filtered="true" packaged="true">
+            <directory>src/main/java</directory>
+
+            <includes>
+                <include>**/*.java</include>
+            </includes>
+            <excludes>
+                <exclude>module-info.java</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet filtered="true">
+            <directory>src/main/java</directory>
+            <includes>
+                <include>module-info.java</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true">
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+            <directory>src/test/java</directory>
+            <includes>
+                <include>**/*.java</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+            <directory/>
+            <includes>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true">
+            <directory>src/site</directory>
+        </fileSet>
+
+        <fileSet filtered="false">
+            <directory>.mvn</directory>
+        </fileSet>
+
+        <fileSet>
+            <directory/>
+            <includes>
+                <include>.github</include>
+                <include>.mvn</include>
+                <include>.dockerignore</include>
+                <include>.editorconfig</include>
+                <include>.gitignore.template</include>
+                <include>lombok.config</include>
+                <include>mvnw</include>
+                <include>mvnw.cmd</include>
+                <include>README.md</include>
+                <include>rules.xml</include>
+                <include>docker</include>
+            </includes>
+        </fileSet>
+
+    </fileSets>
 </archetype-descriptor>
