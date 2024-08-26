@@ -22,4 +22,11 @@
     An archetype which contains a simple Maven project.
   </description>
 
+  <distributionManagement>
+    <site>
+       <id>site</id>
+       <url>file:///tmp/site/staging</url>
+    </site>
+ </distributionManagement>
+
 </project>

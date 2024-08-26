@@ -29,4 +29,11 @@
     </plugins>
   </build>
 
+  <distributionManagement>
+    <site>
+       <id>site</id>
+       <url>file:///tmp/site/staging</url>
+    </site>
+ </distributionManagement>
+
 </project>
