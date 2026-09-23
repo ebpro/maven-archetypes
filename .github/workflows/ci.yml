@@ -14,7 +14,7 @@ jobs:
         uses: ebpro/gh-actions-shared-java/.github/workflows/ci-shareable-maven.yml@develop
         secrets: inherit
         with:
-          runs-on: '[ self-hosted, Linux, X64 ]'
+          runs-on: '["ebpro-org","linux","x64"]'
           quality-goal-run: "true"
           deploy-goal-run: "true"
           site-goal-run: "true"
