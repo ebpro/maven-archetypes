@@ -1,15 +1,35 @@
 # Usage
 
-This simple Java Project is ready for Continuous Integration (CI).
+This Java project is ready for Continuous Integration (CI).
 
-The application can simply be packaged without and with dependencies.
-The default main class of the manifest is defined (see pom.xml).
+The default `app.image` mode is `libs`.
+
+## Run modes
+
+### libs
 
 ```console
-# Compile, run unit and integration tests (the shade plugin generate two artifacts) and package.
-mvn verify
-# Execution from Maven
-mvn exec:java
-# Execution as a uber jar
-java -jar target/myapp-${project.version}-withdependencies.jar
+mvn -Dapp.image=libs clean package
+java -cp "target/${artifactId}-${version}.jar:target/libs/*" ${package}.App
+```
+
+### jlink and native
+
+`jlink` and `native` image modes are pending parent POM alignment and are not part of the initial supported Docker target.
+
+## Docker
+
+Build the initial `finalLibs` image:
+
+```console
+docker build --target finalLibs \
+  --build-arg APP_MAIN_CLASS=${package}.App \
+  -t ${artifactId}:libs \
+  -f docker/Dockerfile .
+```
+
+Using Docker Compose:
+
+```console
+IMAGE_NAME=${artifactId} APP_MAIN_CLASS=${package}.App docker compose -f docker/docker-compose.yml build
 ```

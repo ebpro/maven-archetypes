@@ -3,21 +3,30 @@
 ## Description
 A brief description of what your project does and its purpose.
 
-## Build the Project
-Build the project and run all tests with `./mvnw verify` or `mvnw.cmd verify` for Windows.
+## Run modes
+The default image mode is `libs`.
 
-## Run the application
-
-### Old way with a fat jar
-
+### libs
 ```shell
-./mvnw -P jlink package
-java -jar target/${artifactId}-${version}-withdependencies.jar
+./mvnw clean package
+java -cp "target/${artifactId}-${version}.jar:target/libs/*" ${package}.App
 ```
 
-### New way with jlink
-
+### jlink
 ```shell
-./mvnw -P jlink clean package
+./mvnw -Dapp.image=jlink clean package
 ./target/image/bin/myapp
+```
+
+### native
+```shell
+./mvnw -Dapp.image=native clean package
+./target/${artifactId}
+```
+
+## Docker
+```shell
+docker build --target finalLibs --build-arg APP_MAIN_CLASS=${package}.App -t ${artifactId}:libs -f docker/Dockerfile .
+docker build --target finalJlink -t ${artifactId}:jlink -f docker/Dockerfile .
+docker build --target finalNative --build-arg IMAGE_NAME=${artifactId} -t ${artifactId}:native -f docker/Dockerfile .
 ```
