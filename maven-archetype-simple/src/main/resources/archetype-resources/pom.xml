@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.maven.poms</groupId>
+    <artifactId>maven-parentpom</artifactId>
+    <version>0.1.20</version>
+  </parent>
+
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+
+  <name>${artifactId}</name>
+  <description>A simple Java library project</description>
+  <inceptionYear>2025</inceptionYear>
+
+  <properties>
+    <github.account>${githubAccount}</github.account>
+  </properties>
+
+  <dependencies>
+    <!-- Unit Test -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- SLF4J with Logback -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+
+  <scm>
+    <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
+    <connection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:${github.account}/${project.artifactId}.git</developerConnection>
+  </scm>
+
+</project>
