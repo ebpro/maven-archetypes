@@ -27,3 +27,6 @@ jobs:
           deploy-goal-release: ''
           site-goal-run: "true"
           site-goal-branch: "master"
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
