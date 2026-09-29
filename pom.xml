@@ -9,12 +9,12 @@
   <parent>
     <groupId>fr.ebruno.maven.poms</groupId>
     <artifactId>maven-parentpom</artifactId>
-    <version>0.1.19</version>
+    <version>0.1.20-SNAPSHOT</version>
   </parent>
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
   <artifactId>maven-archetypes</artifactId>
-  <version>0.1.10-SNAPSHOT</version>
+  <version>0.1.11-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache Maven archetypes</name>
@@ -53,6 +53,14 @@
   </scm>
 
   <distributionManagement>
+     <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/ebpro/maven-archetypes</url>
+     </repository>
+     <snapshotRepository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/ebpro/maven-archetypes</url>
+     </snapshotRepository>
      <site>
         <id>site</id>
         <url>file:///tmp/site/staging</url>
@@ -73,12 +81,12 @@
         <repository>
           <id>github</id>
           <name>GitHub Packages</name>
-          <url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url>
+          <url>https://maven.pkg.github.com/${github.account}/maven-archetypes</url>
         </repository>
         <snapshotRepository>
           <id>github</id>
           <name>GitHub Packages</name>
-          <url>https://maven.pkg.github.com/${github.account}/${project.artifactId}</url>
+          <url>https://maven.pkg.github.com/${github.account}/maven-archetypes</url>
         </snapshotRepository>
       </distributionManagement>
 
@@ -215,9 +223,9 @@
           </configuration>
           <dependencies>
             <dependency>
-              <groupId>org.codehaus.groovy</groupId>
+              <groupId>org.apache.groovy</groupId>
               <artifactId>groovy-xml</artifactId>
-              <version>3.0.19</version>
+              <version>4.0.28</version>
             </dependency>
           </dependencies>
         </plugin>

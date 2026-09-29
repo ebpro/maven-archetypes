@@ -3,18 +3,31 @@ name: CI Java (Host)
 on:
   push:
     branches:
-      - '**'        # matches every branch
-      - '!master'   # excludes master
+      - "**"
+    tags:
+      - "!**"
   workflow_dispatch:
+
+env:
+  NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+  NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+
+permissions:
+  contents: read
 
 jobs:
     build:
-        name: build-sonar-site-upload
+        name: build-test-deploy
         uses: ebpro/gh-actions-shared-java/.github/workflows/ci-shareable-maven.yml@develop
         secrets: inherit
         with:
-          runs-on: '["ebpro-org","linux","x64"]'
-          quality-goal-run: "true"
+          runs-on: ebpro-org
+          jdk-matrix: '[ "25" ]'
+          maven-matrix: '[ "3.9.11" ]'
+          verify-goal: 'install'
+          quality-goal-run: "false"
           deploy-goal-run: "true"
+          deploy-goal-develop: ''
+          deploy-goal-release: ''
           site-goal-run: "true"
           site-goal-branch: "master"

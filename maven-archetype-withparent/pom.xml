@@ -8,7 +8,7 @@
   <parent>
     <groupId>fr.ebruno.maven.archetypes</groupId>
     <artifactId>maven-archetypes</artifactId>
-    <version>0.1.10-SNAPSHOT</version>
+    <version>0.1.11-SNAPSHOT</version>
   </parent>
 
   <artifactId>maven-archetype-withparent</artifactId>
@@ -29,11 +29,6 @@
     </plugins>
   </build>
 
-  <distributionManagement>
-    <site>
-       <id>site</id>
-       <url>file:///tmp/site/staging</url>
-    </site>
- </distributionManagement>
+
 
 </project>

@@ -19,27 +19,28 @@
     <app.main.class>${package}.App</app.main.class>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>21</maven.compiler.release>
+    <maven.compiler.release>25</maven.compiler.release>
 
-    <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
-    <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
-    <maven-project-info-reports-plugin.version>3.6.2</maven-project-info-reports-plugin.version>
-    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
-    <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-    <maven-install-plugin.version>3.1.2</maven-install-plugin.version>
-    <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
-    <mavenversions.version>2.17.1</mavenversions.version>
-    <maven-failsafe-plugin.version>3.3.1</maven-failsafe-plugin.version>
-    <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+    <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+    <maven-site-plugin.version>3.22.0</maven-site-plugin.version>
+    <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
+    <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+    <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+    <maven-jar-plugin.version>3.5.1</maven-jar-plugin.version>
+    <maven-install-plugin.version>3.2.0</maven-install-plugin.version>
+    <maven-deploy-plugin.version>3.2.0</maven-deploy-plugin.version>
+    <mavenversions.version>2.22.0</mavenversions.version>
+    <maven-failsafe-plugin.version>3.6.0</maven-failsafe-plugin.version>
+    <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
 
     <junit-jupiter.version>5.11.0</junit-jupiter.version>
     <mockito.version>5.12.0</mockito.version>
     <assertj.version>3.23.1</assertj.version>
-    <testcontainers.version>1.16.3</testcontainers.version>
+    <testcontainers.version>2.0.5</testcontainers.version>
 
-    <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
+    <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
+    <mavenjigsaw.version>1.1.3</mavenjigsaw.version>
     <logback-classic.version>1.5.7</logback-classic.version>
   </properties>
 
@@ -82,7 +83,7 @@
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
 
