@@ -1,15 +1,14 @@
 services:
   myapp:
-    image: ${DOCKER_REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
+    image: ${DOCKER_REPO_NAME:-localhost}/${IMAGE_NAME:-myapp}:${IMAGE_TAG:-latest}
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      target: ${DOCKER_TARGET:-finalShadedJarDebian}
       args:
-        - DOCKER_USERNAME=${DOCKER_USERNAME}
-        - DOCKER_PASSWORD=${DOCKER_PASSWORD}
-        - SONAR_URL=${SONAR_URL}
-        - SONAR_TOKEN=${SONAR_TOKEN}
         - GITHUBACTOR=${GITHUBACTOR}
         - GITHUBTOKEN=${GITHUBTOKEN}
-        - IMAGE_NAME=${IMAGE_NAME}
-        - APP_MAIN_CLASS=${APP_MAIN_CLASS}
+        - SONAR_URL=${SONAR_URL}
+        - SONAR_TOKEN=${SONAR_TOKEN}
+    environment:
+      - APP_MAIN_CLASS=${APP_MAIN_CLASS:-}

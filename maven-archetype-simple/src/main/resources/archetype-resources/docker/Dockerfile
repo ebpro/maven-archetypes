@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM maven:3.9-eclipse-temurin-25-alpine AS libsBuild
+FROM maven:3.9.11-eclipse-temurin-25-alpine AS libsBuild
 WORKDIR /myproject
 COPY pom.xml .
 RUN --mount=type=cache,id=mvn-cache,target=/root/.m2/repository \
@@ -19,7 +19,7 @@ RUN dnf install -y maven && dnf clean all
 COPY pom.xml .
 COPY src src
 RUN --mount=type=cache,id=mvn-cache-native,target=/root/.m2/repository \
-  mvn -B -Dapp.image=native clean verify
+  mvn -B -Dapp.image=native clean verify && mv target/$(ls target | grep -v '\.jar$\|\.pom$\|maven-archiver\|maven-status' | head -1) target/app
 
 FROM eclipse-temurin:25-jre-alpine AS finalLibs
 ARG APP_MAIN_CLASS
@@ -30,13 +30,10 @@ COPY --from=libsBuild /myproject/target/libs /app/libs
 ENTRYPOINT ["sh", "-c", "java -cp /app/app.jar:/app/libs/* \"$APP_MAIN_CLASS\""]
 
 FROM alpine AS finalJlink
-ARG IMAGE_NAME=myapp
-ENV IMAGE_NAME=${IMAGE_NAME}
-COPY --from=jlinkBuild /myproject/target/image /${IMAGE_NAME}
-ENTRYPOINT ["/${IMAGE_NAME}/bin/myapp"]
+COPY --from=jlinkBuild /myproject/target/image /app
+ENTRYPOINT ["/app/bin/myapp"]
 
-FROM alpine AS finalNative
-ARG IMAGE_NAME=myapp
-ENV IMAGE_NAME=${IMAGE_NAME}
-COPY --from=nativeBuild /myproject/target/${IMAGE_NAME} /app/app
+FROM oraclelinux:9 AS finalNative
+COPY --from=nativeBuild /myproject/target/app /app/app
+RUN chmod +x /app/app
 ENTRYPOINT ["/app/app"]
