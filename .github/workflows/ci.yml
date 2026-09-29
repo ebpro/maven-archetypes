@@ -50,10 +50,10 @@ jobs:
                 target: finaljlink
                 extra-args: ""
               - archetype: maven-archetype-withparent
-                target: finalShadedJarDebian
-                extra-args: ""
+                target: finallibs
+                extra-args: "--build-arg APP_MAIN_CLASS=it.pkg.App"
               - archetype: maven-archetype-withparent
-                target: finalJLinkDebian
+                target: finaljlink
                 extra-args: ""
         steps:
           - uses: actions/checkout@v4

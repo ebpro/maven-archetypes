@@ -4,11 +4,10 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-      target: ${DOCKER_TARGET:-finalShadedJarDebian}
+      target: ${DOCKER_TARGET:-finallibs}
       args:
         - GITHUBACTOR=${GITHUBACTOR}
         - GITHUBTOKEN=${GITHUBTOKEN}
-        - SONAR_URL=${SONAR_URL}
-        - SONAR_TOKEN=${SONAR_TOKEN}
+        - APP_MAIN_CLASS=${APP_MAIN_CLASS:-}
     environment:
       - APP_MAIN_CLASS=${APP_MAIN_CLASS:-}
