@@ -66,7 +66,13 @@
                 <include>mvnw.cmd</include>
                 <include>README.md</include>
                 <include>rules.xml</include>
-                <include>docker</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>docker</directory>
+            <includes>
+                <include>**/*</include>
             </includes>
         </fileSet>
 

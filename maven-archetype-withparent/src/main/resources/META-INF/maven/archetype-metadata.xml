@@ -73,7 +73,6 @@
                 <include>rules.xml</include>
                 <include>README.md</include>
                 <include>.github</include>
-                <include>docker</include>
                 <include>.mvn</include>
             </includes>
         </fileSet>

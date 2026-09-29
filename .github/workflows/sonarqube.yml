@@ -23,6 +23,13 @@ jobs:
       sonar-host-url: ${{ vars.SONAR_HOST_URL }}
       sonar-public-url: ${{ vars.SONAR_PUBLIC_URL }}
       sonar-runner: ${{ vars.SONAR_RUNNER }}
+      # The shared reusable workflow runs a bare `./mvnw clean verify sonar:sonar`
+      # with no Maven settings file, so it cannot resolve the SNAPSHOT parent POM
+      # (fr.ebruno.maven.poms:maven-parentpom) that only exists in GitHub Packages.
+      # Reuse the same settings file + GitHub Packages credentials the build job
+      # uses (ci-utils-java/ci-settings.xml + GITHUBORG/GITHUBACTOR/GITHUBTOKEN)
+      # so the reactor can resolve the parent from GitHub Packages.
+      build-command: "export GITHUBORG=${{ secrets.GITHUBORG }} GITHUBACTOR=${{ secrets.GITHUBORG }} GITHUBTOKEN=${{ secrets.GITHUBTOKEN }} && ./mvnw -B --settings ci-utils-java/ci-settings.xml clean verify sonar:sonar -Psonar"
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_URL: ${{ secrets.SONAR_URL }}
