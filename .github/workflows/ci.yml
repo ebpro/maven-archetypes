@@ -11,6 +11,7 @@ on:
 env:
   NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
   NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+  GITHUBORG: ${{ secrets.GITHUBORG }}
   GITHUBACTOR: ${{ secrets.GITHUBORG }}
   GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
