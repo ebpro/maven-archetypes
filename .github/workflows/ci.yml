@@ -44,10 +44,10 @@ jobs:
           matrix:
             include:
               - archetype: maven-archetype-simple
-                target: finalLibs
+                target: finallibs
                 extra-args: "--build-arg APP_MAIN_CLASS=it.pkg.App"
               - archetype: maven-archetype-simple
-                target: finalJlink
+                target: finaljlink
                 extra-args: ""
               - archetype: maven-archetype-withparent
                 target: finalShadedJarDebian
