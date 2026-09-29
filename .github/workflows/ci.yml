@@ -74,6 +74,11 @@ jobs:
 
           - name: Generate test project
             run: |
+              # Run from a clean temp dir: invoking archetype:generate from the
+              # repo root makes the archetype plugin inject the multi-module
+              # parent (fr.ebruno.maven.archetypes:maven-archetypes) into the
+              # generated project, which is then unresolvable at docker build time.
+              mkdir -p /tmp/gen && cd /tmp/gen
               GROUP="it.docker"
               PKG="it.docker"
               if [ "${{ matrix.archetype }}" = "maven-archetype-simple" ]; then
@@ -98,7 +103,7 @@ jobs:
               fi
 
           - name: Build Docker image
-            working-directory: dockertest
+            working-directory: /tmp/gen/dockertest
             run: |
               docker build \
                 -f docker/Dockerfile \
