@@ -16,6 +16,8 @@
 
   <properties>
     <app.main.class>${package}.App</app.main.class>
+    <app.image>libs</app.image>
+    <app.module.name>${package}</app.module.name>
 
     <!-- Add a github server entry in ~/.m2/settings.xml or see ci-settings.xml -->
     <github.account>${githubAccount}</github.account>
@@ -82,6 +84,41 @@
       <artifactId>logback-classic</artifactId>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>libs</id>
+      <activation>
+        <property>
+          <name>app.image</name>
+          <value>libs</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>${mavendependency.version}</version>
+            <executions>
+              <execution>
+                <id>copy-runtime-dependencies</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/libs</outputDirectory>
+                  <includeScope>runtime</includeScope>
+                  <overWriteIfNewer>true</overWriteIfNewer>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <scm>
     <url>https://github.com/${github.account}/${project.artifactId}/tree/${project.scm.tag}</url>
