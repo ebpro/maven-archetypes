@@ -10,8 +10,6 @@ COPY pom.xml .
 COPY src src
 COPY docker/ci-settings.xml .
 RUN --mount=type=cache,id=mvncache,target=/root/.m2/repository,rw \
-    mvn -s ci-settings.xml -B -Dapp.image=libs dependency:go-offline
-RUN --mount=type=cache,id=mvncache,target=/root/.m2/repository,rw \
     mvn -s ci-settings.xml -B -Dapp.image=libs clean verify
 
 FROM build AS jlinkbuild
