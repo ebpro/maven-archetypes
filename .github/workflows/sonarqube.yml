@@ -14,22 +14,56 @@ concurrency:
   group: sonarqube-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# The SonarQube job is inlined (instead of reusing ebpro/ci-java/sonarqube-maven.yml)
+# because the archetypes reactor must resolve its SNAPSHOT parent POM
+# (fr.ebruno.maven.poms:maven-parentpom) from GitHub Packages. That requires the
+# project's ci-settings.xml plus the GITHUBORG/GITHUBTOKEN credentials, which the
+# shared reusable workflow cannot receive (it only accepts SONAR_TOKEN/SONAR_URL and
+# does not run a settings-file-aware build). Note: `secrets.*` cannot be referenced
+# inside the `with:` block of a reusable-workflow call (GitHub rejects the workflow
+# at parse/dispatch time), so the credentials are wired here as top-level env vars.
+env:
+  GITHUBORG: ${{ secrets.GITHUBORG }}
+  GITHUBACTOR: ${{ secrets.GITHUBORG }}
+  GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+  SONAR_URL: ${{ secrets.SONAR_URL }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 jobs:
   sonarqube:
-    uses: ebpro/ci-java/.github/workflows/sonarqube-maven.yml@v1.0.0
-    with:
-      java-version: '25'
-      sonar-main-branch: ${{ vars.SONAR_MAIN_BRANCH || 'develop' }}
-      sonar-host-url: ${{ vars.SONAR_HOST_URL }}
-      sonar-public-url: ${{ vars.SONAR_PUBLIC_URL }}
-      sonar-runner: ${{ vars.SONAR_RUNNER }}
-      # The shared reusable workflow runs a bare `./mvnw clean verify sonar:sonar`
-      # with no Maven settings file, so it cannot resolve the SNAPSHOT parent POM
-      # (fr.ebruno.maven.poms:maven-parentpom) that only exists in GitHub Packages.
-      # Reuse the same settings file + GitHub Packages credentials the build job
-      # uses (ci-utils-java/ci-settings.xml + GITHUBORG/GITHUBACTOR/GITHUBTOKEN)
-      # so the reactor can resolve the parent from GitHub Packages.
-      build-command: "export GITHUBORG=${{ secrets.GITHUBORG }} GITHUBACTOR=${{ secrets.GITHUBORG }} GITHUBTOKEN=${{ secrets.GITHUBTOKEN }} && ./mvnw -B --settings ci-utils-java/ci-settings.xml clean verify sonar:sonar -Psonar"
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_URL: ${{ secrets.SONAR_URL }}
+    name: Analyze with SonarQube
+    runs-on: ${{ vars.SONAR_RUNNER || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: 'maven'
+
+      - name: Prepare SonarQube analysis target
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.number }}
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.base_ref }}
+          REF_NAME: ${{ github.ref_name }}
+          MAIN_BRANCH: ${{ vars.SONAR_MAIN_BRANCH || 'develop' }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            echo "SONAR_SCAN_ARGS=-Dsonar.pullRequest.key=$PR_NUMBER -Dsonar.pullRequest.branch=$HEAD_REF -Dsonar.pullRequest.base=$BASE_REF -Dsonar.projectVersion=$COMMIT_SHA" >> "$GITHUB_ENV"
+          elif [ "$REF_NAME" = "$MAIN_BRANCH" ]; then
+            echo "SONAR_SCAN_ARGS=-Dsonar.projectVersion=$COMMIT_SHA" >> "$GITHUB_ENV"
+          else
+            echo "SONAR_SCAN_ARGS=-Dsonar.branch.name=$REF_NAME -Dsonar.projectVersion=$COMMIT_SHA" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build, test and analyze
+        run: ./mvnw -B --settings ci-utils-java/ci-settings.xml clean verify sonar:sonar -Psonar ${SONAR_SCAN_ARGS}
