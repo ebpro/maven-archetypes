@@ -1,7 +1,7 @@
 name: Feature request / improvement
 description: Suggest an enhancement or new feature
 title: "[enh]: "
-labels: ["enhancement", "triage"]
+labels: ["enhancement"]
 body:
   - type: textarea
     id: problem

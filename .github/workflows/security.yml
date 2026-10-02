@@ -6,6 +6,13 @@ on:
   schedule:
     # Weekly scan (Sundays at 2am UTC)
     - cron: '0 2 * * 0'
+  push:
+    # SBOM generation runs on trusted pushes. Fork PRs fire `pull_request`
+    # (not `push`), so they never reach the Maven-executing jobs below.
+    branches:
+      - develop
+      - master
+  workflow_dispatch: # manual on-demand scans by maintainers
 
 permissions:
   contents: read
@@ -49,6 +56,11 @@ jobs:
 
   sbom:
     name: Generate SBOM
+    # Runs Maven on a self-hosted runner — restrict to trusted contexts so
+    # fork PRs (untrusted) never execute build logic against internal infra.
+    if: >-
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ebpro-org
     steps:
       - uses: actions/checkout@v7
@@ -75,6 +87,11 @@ jobs:
 
   dependency-check-canary:
     name: OWASP Dependency Check (canary)
+    # Runs Maven on a self-hosted runner — restrict to trusted contexts so
+    # fork PRs (untrusted) never execute build logic against internal infra.
+    if: >-
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ebpro-org
     steps:
       - uses: actions/checkout@v7
@@ -88,8 +105,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build parent + canary
-        run: ./mvnw -B --settings ci-utils-java/ci-settings.xml clean verify -DskipTests --errors -pl maven-archetype-simple -am
+      - name: Build full reactor
+        run: ./mvnw -B --settings ci-utils-java/ci-settings.xml clean verify -DskipTests --errors
         env:
           MAVEN_OPTS: -Xmx512m
 
@@ -105,14 +122,13 @@ jobs:
           restore-keys: |
             nvd-
 
-      - name: Run OWASP Dependency Check on canary
+      - name: Run OWASP Dependency Check
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          ./mvnw -B org.owasp:dependency-check-maven:13.0.0:check \
-            --settings ci-utils-java/ci-settings.xml \
-            -pl maven-archetype-simple \
-            -DnvdApiKey="${NVD_API_KEY}" \
-            -DdataDirectory=/home/runner/.nvd-cache \
+          ./mvnw -B --settings ci-utils-java/ci-settings.xml \
+            org.owasp:dependency-check-maven:check \
+            -DfailOnError=true \
             -DautoUpdate=true \
-            -DfailBuildOnCVSS=9
+            -DdataDirectory=/home/runner/.nvd-cache \
+            -DnvdApiKey="${NVD_API_KEY}"

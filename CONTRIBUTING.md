@@ -24,12 +24,21 @@ Thanks for contributing!
 
 ## Docker targets
 
-Each archetype supports:
-- `finallibs` (default): thin JAR + `target/libs/`
-- `finaljlink`: JPMS custom runtime image
-- `finalnative`: GraalVM native image (not in CI)
+The `app.image` Maven property and the Docker `--target` stage names are
+**different** — the property selects the Maven build profile, the `--target`
+selects the Docker stage. Both are shown below.
 
-Activate via: `-Dapp.image=finaljlink` or `-Dapp.image=finalnative`
+| Target | `docker build --target` | Maven profile (`-Dapp.image`) | Description |
+|--------|------------------------|-------------------------------|-------------|
+| Thin JAR + libs | `finallibs` | `libs` (default) | JAR + `target/libs/` |
+| Custom runtime | `finaljlink` | `jlink` | JPMS jlink image |
+| Native image | `finalnative` | `native` | GraalVM native (not in CI) |
+
+Build:
+```bash
+docker build --target finallibs --build-arg APP_MAIN_CLASS=com.example.App -t myapp .
+docker build --target finaljlink -t myapp .
+```
 
 ## Conventions
 

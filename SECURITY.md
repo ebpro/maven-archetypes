@@ -13,7 +13,7 @@ Only the latest release is supported for security fixes.
 **Please do not report security vulnerabilities through public GitHub issues.**
 
 1. **Preferred:** Use [GitHub Private Vulnerability Reporting](https://docs.github.com/code-security/security-advisories/creating-a-security-advisory#reporting-a-vulnerability) for this repository.
-2. **Fallback:** Email the maintainer with a clear description, affected version(s), and a minimal reproduction.
+2. **Fallback:** Email [emmanuel.bruno@univ-tln.fr](mailto:emmanuel.bruno@univ-tln.fr) with a clear description, affected version(s), and a minimal reproduction.
 
 We aim to acknowledge reports within **72 hours** and provide a fix or mitigation plan within **14 days** for confirmed, high-severity issues.
 
