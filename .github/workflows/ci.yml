@@ -75,7 +75,7 @@ jobs:
 
           - name: Generate test project
             run: |
-              # Run from a clean temp dir: invoking archetype:generate from the
+              # Run from a clean temp dir: invoking org.apache.maven.plugins:maven-archetype-plugin:3.4.1:generate from the
               # repo root makes the archetype plugin inject the multi-module
               # parent (fr.ebruno.maven.archetypes:maven-archetypes) into the
               # generated project, which is then unresolvable at docker build time.
@@ -83,7 +83,7 @@ jobs:
               GROUP="it.docker"
               PKG="it.docker"
               if [ "${{ matrix.archetype }}" = "maven-archetype-simple" ]; then
-                "$GITHUB_WORKSPACE/mvnw" -B --settings "$GITHUB_WORKSPACE/ci-utils-java/ci-settings.xml" archetype:generate \
+                "$GITHUB_WORKSPACE/mvnw" -B --settings "$GITHUB_WORKSPACE/ci-utils-java/ci-settings.xml" org.apache.maven.plugins:maven-archetype-plugin:3.4.1:generate \
                   -DarchetypeGroupId=fr.ebruno.maven.archetypes \
                   -DarchetypeArtifactId=maven-archetype-simple \
                   -DarchetypeVersion=0.1.11-SNAPSHOT \
@@ -92,7 +92,7 @@ jobs:
                   -Dversion=1.0.0-SNAPSHOT \
                   -Dpackage=${PKG}
               else
-                "$GITHUB_WORKSPACE/mvnw" -B --settings "$GITHUB_WORKSPACE/ci-utils-java/ci-settings.xml" archetype:generate \
+                "$GITHUB_WORKSPACE/mvnw" -B --settings "$GITHUB_WORKSPACE/ci-utils-java/ci-settings.xml" org.apache.maven.plugins:maven-archetype-plugin:3.4.1:generate \
                   -DarchetypeGroupId=fr.ebruno.maven.archetypes \
                   -DarchetypeArtifactId=maven-archetype-withparent \
                   -DarchetypeVersion=0.1.11-SNAPSHOT \
