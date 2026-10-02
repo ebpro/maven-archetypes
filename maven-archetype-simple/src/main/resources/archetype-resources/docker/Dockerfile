@@ -1,6 +1,10 @@
 # syntax=docker/dockerfile:1
 
+ARG GRAALVM_IMAGE=ghcr.io/graalvm/graalvm-community:java25-ol9
+
 FROM maven:3.9.11-eclipse-temurin-25-alpine AS libsbuild
+ARG MAVEN_PROXY_URL
+ENV MAVEN_PROXY_URL=${MAVEN_PROXY_URL}
 WORKDIR /myproject
 COPY pom.xml .
 RUN --mount=type=cache,id=mvn-cache,target=/root/.m2/repository \
@@ -13,7 +17,9 @@ FROM libsbuild AS jlinkbuild
 RUN --mount=type=cache,id=mvn-cache,target=/root/.m2/repository \
   mvn -B -Dapp.image=jlink clean verify
 
-FROM ghcr.io/graalvm/graalvm-community:java25-ol9 AS nativebuild
+FROM ${GRAALVM_IMAGE} AS nativebuild
+ARG MAVEN_PROXY_URL
+ENV MAVEN_PROXY_URL=${MAVEN_PROXY_URL}
 WORKDIR /myproject
 RUN dnf install -y maven && dnf clean all
 COPY pom.xml .

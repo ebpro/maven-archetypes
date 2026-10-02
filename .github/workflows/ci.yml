@@ -106,23 +106,17 @@ jobs:
           - name: Build Docker image
             working-directory: /tmp/gen/dockertest
             run: |
-              # Pass the proxy-aware Maven settings into the container so that
-              # dependency resolution during the in-container `mvn` build can
-              # route through the Nexus proxy/cache. The settings file is
-              # base64-encoded and injected as a build-arg (credentials stay in
-              # the file; the Dockerfile template decodes it at build time).
-              # NOTE: $GITHUB_WORKSPACE is required here because this step's
-              # working-directory is the generated project, not the repo root.
-              SETTINGS_B64=$(base64 -w0 "$GITHUB_WORKSPACE/ci-utils-java/ci-settings.xml")
-              # TODO: Update Dockerfile templates to decode MAVEN_SETTINGS_B64
-              #       into /root/.m2/settings.xml (and expose MAVEN_PROXY_URL
-              #       as an ENV) so the in-container Maven picks it up.
+              # Route the in-container Maven build through the Nexus proxy/cache
+              # via MAVEN_PROXY_URL, and pull the GraalVM image from the
+              # cluster-internal Harbor GHCR proxy cache (GRAALVM_IMAGE) instead
+              # of GHCR to keep image pulls fast and reliable in CI.
               docker build \
                 -f docker/Dockerfile \
                 --target ${{ matrix.target }} \
                 --build-arg GITHUBACTOR=${GITHUBACTOR} \
                 --build-arg GITHUBTOKEN=${GITHUBTOKEN} \
-                --build-arg MAVEN_SETTINGS_B64="${SETTINGS_B64}" \
+                --build-arg MAVEN_PROXY_URL="${MAVEN_PROXY_URL}" \
+                --build-arg GRAALVM_IMAGE=harbor.ebruno.fr/ghcr-p2c/graalvm/graalvm-community:java25-ol9 \
                 ${{ matrix.extra-args }} \
                 -t ci-test:${{ matrix.archetype }}-${{ matrix.target }} \
                 .

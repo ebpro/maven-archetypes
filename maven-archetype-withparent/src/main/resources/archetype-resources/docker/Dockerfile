@@ -1,10 +1,14 @@
 # syntax=docker/dockerfile:1
 
+ARG GRAALVM_IMAGE=ghcr.io/graalvm/graalvm-community:java25-ol9
+
 FROM maven:3.9.11-eclipse-temurin-25 AS build
 ARG GITHUBACTOR
 ARG GITHUBTOKEN
 ENV GITHUBACTOR="$GITHUBACTOR"
 ENV GITHUBTOKEN="$GITHUBTOKEN"
+ARG MAVEN_PROXY_URL
+ENV MAVEN_PROXY_URL=${MAVEN_PROXY_URL}
 WORKDIR /myproject
 COPY pom.xml .
 COPY src src
@@ -16,11 +20,13 @@ FROM build AS jlinkbuild
 RUN --mount=type=cache,id=mvncache,target=/root/.m2/repository,rw \
     mvn -s ci-settings.xml -B -Dapp.image=jlink clean verify
 
-FROM ghcr.io/graalvm/graalvm-community:java25-ol9 AS nativebuild
+FROM ${GRAALVM_IMAGE} AS nativebuild
 ARG GITHUBACTOR
 ARG GITHUBTOKEN
 ENV GITHUBACTOR="$GITHUBACTOR"
 ENV GITHUBTOKEN="$GITHUBTOKEN"
+ARG MAVEN_PROXY_URL
+ENV MAVEN_PROXY_URL=${MAVEN_PROXY_URL}
 WORKDIR /myproject
 RUN dnf install -y maven && dnf clean all
 COPY pom.xml .
