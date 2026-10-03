@@ -14,7 +14,7 @@
 
   <groupId>fr.ebruno.maven.archetypes</groupId>
   <artifactId>maven-archetypes</artifactId>
-  <version>0.1.11-SNAPSHOT</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
 
   <name>Apache Maven archetypes</name>
@@ -162,6 +162,14 @@
   </modules>
 
   <properties>
+    <!--
+      CI-friendly version (SOTA 2026): single source of truth for the
+      project version. Override at release time with -Drevision=X.Y.Z
+      (see .github/workflows/release.yml). flatten-maven-plugin (inherited
+      from maven-parentpom) publishes a self-contained POM with the concrete
+      version resolved, so consumers never see ${revision}.
+    -->
+    <revision>0.1.11-SNAPSHOT</revision>
     <github.account>ebpro</github.account>
     <mavenarchetypepackaging.version>3.2.0</mavenarchetypepackaging.version>
     <!-- SonarQube (quality) plugin version -->
