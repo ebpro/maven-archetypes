@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: ['**']
   push:
-    branches: [develop, main, master]
+    branches: [main]
 
 permissions:
   contents: read
@@ -57,7 +57,7 @@ jobs:
           HEAD_REF: ${{ github.head_ref }}
           BASE_REF: ${{ github.base_ref }}
           REF_NAME: ${{ github.ref_name }}
-          MAIN_BRANCH: ${{ vars.SONAR_MAIN_BRANCH || 'develop' }}
+          MAIN_BRANCH: ${{ vars.SONAR_MAIN_BRANCH || 'main' }}
           COMMIT_SHA: ${{ github.sha }}
         run: |
           if [ "$EVENT_NAME" = "pull_request" ]; then

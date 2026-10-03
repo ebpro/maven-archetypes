@@ -10,8 +10,7 @@ on:
     # SBOM generation runs on trusted pushes. Fork PRs fire `pull_request`
     # (not `push`), so they never reach the Maven-executing jobs below.
     branches:
-      - develop
-      - master
+      - main
   workflow_dispatch: # manual on-demand scans by maintainers
 
 permissions:
