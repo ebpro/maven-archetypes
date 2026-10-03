@@ -5,6 +5,49 @@ This project maintains some Maven archetypes.
 * `fr.ebruno.maven.archetypes:simple` a simple standalone Java project.
 * `fr.ebruno.maven.archetypes:simple-withparent`a CI ready one with a complete parent POM.
 
+## Git Workflow
+
+This repository follows a **trunk-based** development model:
+
+- **`main`** is the only long-lived branch (always deployable, always green)
+- Feature branches are short-lived (max 2 days) and merge via **squash PR**
+- **Releases** are tags (`vX.Y.Z`) on `main` — no release branches
+
+### Branch Naming
+
+| Prefix | Purpose | Example |
+|--------|---------|---------|
+| `feat/` | New feature | `feat/docker-harbor-proxy` |
+| `fix/` | Bug fix | `fix/maven-prefix-resolution` |
+| `refactor/` | Restructure | `refactor/ci-dedup` |
+| `ci/` | CI/CD changes | `ci/sota-2026-actions` |
+| `chore/` | Deps, config | `chore/bump-assertj` |
+| `docs/` | Documentation | `docs/contributing-update` |
+
+### Release Process
+
+1. Ensure `main` is green (all CI checks pass)
+2. **Prerequisite**: parent POM (`maven-parentpom`) must be released first
+   - Update `<parent><version>` in `pom.xml` to the released version (PR)
+3. Create a tag: `git tag v0.1.11 && git push origin v0.1.11`
+4. The `release.yml` workflow fires automatically:
+   - Builds all modules with `-Drevision=0.1.11`
+   - Signs (GPG)
+   - Deploys to GitHub Packages
+   - (Opt-in) Publishes to Maven Central Portal
+   - Creates a GitHub Release with auto-generated notes
+   - Validates artifacts are resolvable
+5. Bump to next SNAPSHOT via PR: change `<revision>` to `0.1.12-SNAPSHOT`
+
+### CI Pipeline
+
+Every PR and push to `main` triggers:
+- **Build + Test** (Java 25, Maven 3.9.11, Temurin)
+- **Docker build matrix** (libs + jlink targets, both archetypes)
+- **SonarQube** analysis
+- **Dependency Review** (license + vulnerability)
+- **SNAPSHOT deploy** to GitHub Packages (on `main` push)
+
 ## fr.ebruno.maven.archetypes:simple
 
 An archetype to generate a simple standalone maven project.

@@ -6,14 +6,13 @@ Thanks for contributing!
 
 1. Fork & clone, then create a branch: `git checkout -b feat/your-change`
 2. Build & test: `./mvnw -B clean verify`
-3. Open a PR against `develop` using the PR template.
+3. Open a PR against `main` using the PR template.
 
 ## Branches
 
 | Branch | Purpose |
 |--------|---------|
-| `develop` | Default branch, receives PRs |
-| `master` | Release / site branch (no direct PRs) |
+| `main` | Default branch (always deployable), receives PRs |
 
 ## Archetypes
 
