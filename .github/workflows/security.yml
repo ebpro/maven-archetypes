@@ -74,7 +74,7 @@ jobs:
           cache: 'maven'
 
       - name: Generate CycloneDX SBOM
-        run: ./mvnw -B --settings ci-utils-java/ci-settings.xml org.cyclonedx:cyclonedx-maven-plugin:2.9.1:makeBom -DoutputFormat=All -DoutputName=bom
+        run: ./mvnw -B --settings ci-utils-java/ci-settings.xml org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeBom -DoutputFormat=All -DoutputName=bom
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v7
