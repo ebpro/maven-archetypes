@@ -1,0 +1,162 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g., v0.1.11)'
+        required: true
+        type: string
+      publish-central:
+        description: 'Also publish to Maven Central Portal'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CI: true
+  GITHUBORG: ${{ github.repository_owner }}
+  MAVEN_PROXY_URL: ${{ secrets.MAVEN_PROXY_URL }}
+  NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+  NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+
+jobs:
+  release:
+    name: Release ${{ github.ref_name }}
+    runs-on: [self-hosted, linux, ebpro-org, x64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            TAG="${GITHUB_REF_NAME}"
+          else
+            TAG="${{ github.event.inputs.tag }}"
+          fi
+          REVISION="${TAG#v}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "revision=${REVISION}" >> "$GITHUB_OUTPUT"
+          echo "Releasing: ${REVISION}"
+
+      - name: Setup Java 25
+        uses: actions/setup-java@v6
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Setup GPG
+        uses: olafbergerson/gpg-maven-action@v2
+        with:
+          gpg-passphrase: ${{ secrets.SIGN_KEY_PASS }}
+          gpg-key: ${{ secrets.SIGN_KEY }}
+          gpg-key-armored: true
+
+      - name: Build + Sign + Deploy to GitHub Packages
+        env:
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+        run: |
+          ./mvnw -B --settings ci-utils-java/ci-settings.xml \
+            clean deploy -P release \
+            -Drevision="${{ steps.version.outputs.revision }}" \
+            -DskipTests
+
+      - name: Publish to Maven Central Portal
+        if: github.event.inputs.publish-central == 'true'
+        env:
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          CENTRAL_PORTAL_TOKEN: ${{ secrets.CENTRAL_PORTAL_TOKEN }}
+        run: |
+          ./mvnw -B --settings ci-utils-java/ci-settings.xml \
+            org.sonatype.central:central-publishing-maven-plugin:0.11.0:publish \
+            -Drevision="${{ steps.version.outputs.revision }}" \
+            -Dcentral.publishing.username="${CENTRAL_PORTAL_USERNAME}" \
+            -Dcentral.publishing.password="${CENTRAL_PORTAL_TOKEN}" \
+            -Dcentral.publishing.defaultDeploymentRepository=central-portal-ebpro
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Release ${{ steps.version.outputs.revision }}"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
+
+      - name: Upload SBOM
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sbom-${{ steps.version.outputs.tag }}
+          path: |
+            */target/bom.json
+            */target/bom.xml
+          retention-days: 365
+
+  validate:
+    name: Validate published artifacts
+    needs: release
+    runs-on: [self-hosted, linux, ebpro-org, x64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: Setup Java 25
+        uses: actions/setup-java@v6
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            TAG="${GITHUB_REF_NAME}"
+          else
+            TAG="${{ github.event.inputs.tag }}"
+          fi
+          echo "revision=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify parent archetype resolvable
+        env:
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+        run: |
+          ./mvnw -B \
+            org.apache.maven.plugins:maven-dependency-plugin:3.8.1:get \
+            -Dartifact=fr.ebruno.maven.archetypes:maven-archetypes:${{ steps.version.outputs.revision }}:pom \
+            -DremoteRepositories=github::default::https://maven.pkg.github.com/ebpro/maven-archetypes
+          echo "✅ maven-archetypes:${{ steps.version.outputs.revision }} is resolvable"
+
+      - name: Verify child archetype resolvable
+        env:
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+        run: |
+          ./mvnw -B \
+            org.apache.maven.plugins:maven-dependency-plugin:3.8.1:get \
+            -Dartifact=fr.ebruno.maven.archetypes:maven-archetype-simple:${{ steps.version.outputs.revision }}:jar \
+            -DremoteRepositories=github::default::https://maven.pkg.github.com/ebpro/maven-archetypes
+          echo "✅ maven-archetype-simple:${{ steps.version.outputs.revision }} is resolvable"
