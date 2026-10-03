@@ -1,0 +1,9 @@
+# Default owner for the entire repository
+* @ebpro
+
+# CI/CD and security configuration
+/.github/workflows/ @ebpro
+/.github/dependabot.yml @ebpro
+
+# Build configuration
+pom.xml @ebpro
