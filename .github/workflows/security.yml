@@ -23,8 +23,20 @@ permissions:
 # - Harbor (Docker registry mirror) — configured via runner daemon.json
 # This avoids re-downloading artifacts from the internet on every run.
 # No arch constraint on the runner label: ARM runners are supported.
+#
+# ci-settings.xml resolves ${env.GITHUBORG}, ${env.GITHUBACTOR},
+# ${env.GITHUBTOKEN}, ${env.MAVEN_PROXY_URL}, ${env.NEXUS_USERNAME},
+# ${env.NEXUS_PASSWORD} — these MUST be set for any Maven step to resolve
+# the parent POM (fr.ebruno.maven.poms:maven-parentpom) from GitHub Packages.
+# Mirrors the env block in ci.yml.
 env:
   RUNNER: self-hosted
+  NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+  NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+  MAVEN_PROXY_URL: ${{ secrets.MAVEN_PROXY_URL }}
+  GITHUBORG: ${{ secrets.GITHUBORG }}
+  GITHUBACTOR: ${{ secrets.GITHUBORG }}
+  GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
 jobs:
   dependency-review:
